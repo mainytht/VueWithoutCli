@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p>父组件说：{{message}}</p>
+        <!--使用组件-->
+        <my-component></my-component>
+    </div>
+<!--定义模板-->
+<template id="childComp">
+    <p>子组件说：{{message}}</p>
+</template>
+<script>
+    var child= {
+        template: '#childComp',//必须绑定一个模板
+        data:function(){
+            return {
+                message:"我是子组件"
+            }
+        }
+    }
+    new Vue({
+        el: '#app',
+        components: {
+            'my-component': child
+        },
+        data:{
+            message:"我是父组件"
+        }
+    })
+</script>
+</body>
+   
+</html>

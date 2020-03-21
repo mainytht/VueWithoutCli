@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <p>父组件说：{{message}}</p>
+        <!--使用组件，传递参数**************,子组件通过prop获取父组件传递自己的参数-->
+        <my-component :message="fu"></my-component>
+    </div>
+<!--定义模板-->
+<template id="childComp">
+    <p>子组件说：{{message}}</p>
+</template>
+<script>
+    var child= {
+        //声明参数*********************
+        props:["fu","message"],
+        template: '#childComp',
+        data:function(){
+            return {
+                message:"我是子组件",
+                // message:优先级小于props，此处被绑定是的props里的message，因此被屏蔽
+                zi:"子组件内容"
+            }
+        }
+    }
+    new Vue({
+        el: '#app',
+        components: {
+            'my-component': child
+        },
+        data:{
+            message:"我是父组件",
+            fu:"父组件内容"
+        }
+    })
+</script>
+</body>
+</html>

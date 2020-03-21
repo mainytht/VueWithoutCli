@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- router-link会被渲染成a标签-->
+        <!-- 如果想传递变量，使用:to="url"-->
+        <router-link to="/child1">子组件1</router-link>
+        <router-link to="/child2">子组件2</router-link>
+        <!--路由匹配到的组件将渲染在这里-->
+        <router-view></router-view>
+    </div>
+<!--定义模板-->
+<template id="childComp">
+    <div>
+        <p>子组件说：{{message}}</p>
+    </div>
+</template>
+<script>
+    //  first cdn import in head
+    Vue.use(VueRouter);
+    
+    var child1= {
+        template: '#childComp',
+        data:function(){
+            return {
+                message:"我是子组件1"
+            }
+        }
+    }
+    var child2= {
+        template: '#childComp',
+        data:function(){
+            return {
+                message:"我是子组件2"
+            }
+        }
+    }
+    //定义路由
+    var routes = [
+        //每个路由对应一个组件
+        {path:'/child1',component:child1},
+        {path:'/child2',component:child2}
+    ]
+    var router = new VueRouter({
+        routes:routes
+    })
+    new Vue({
+        el:"#app",
+        router:router
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="https://unpkg.com/vue"></script>
+</head>
+<body>
+    <div id="app">
+        <p>父组件说：{{message}}</p>
+        <!--自定义increment事件用以传递参数**************-->
+        <my-component :message="fu" @increment="get"></my-component>
+    </div>
+<!--定义模板-->
+<template id="childComp">
+    <div>
+        <p>子组件说：{{message}}</p>
+        <button @click="send">传参</button>
+    </div>
+</template>
+<script>
+    var child= {
+        props:["fu","message"],
+        template: '#childComp',
+        data:function(){
+            return {
+                message:"我是子组件",
+                zi:"子组件内容"
+            }
+        },
+        methods:{
+            send:function(){
+                //触发increment事件，并传递参数**************
+                this.$emit("increment",{mes:this.zi});
+            }
+        }
+    }
+    new Vue({
+        el: '#app',
+        components: {
+            'my-component': child
+        },
+        data:{
+            message:"我是父组件",
+            fu:"父组件内容"
+        },
+        methods:{
+            //在事件处理函数中接收参数并赋值给message*************
+            get:function(opt){
+                this.message = opt.mes;
+            }
+        }
+    })
+</script>
+</html>
